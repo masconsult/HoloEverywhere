@@ -8,6 +8,7 @@ import org.holoeverywhere.widget.ProgressBar;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -59,7 +60,7 @@ public class ProgressDialog extends AlertDialog {
     private Drawable mIndeterminateDrawable;
     private int mMax;
     private CharSequence mMessage;
-    private TextView mMessageView;
+    public TextView mMessageView;
     private ProgressBar mProgress;
     private Drawable mProgressDrawable;
     private TextView mProgressNumber;
@@ -181,6 +182,7 @@ public class ProgressDialog extends AlertDialog {
                             R.layout.progress_dialog_holo));
             mProgress = (ProgressBar) view.findViewById(R.id.progress);
             mMessageView = (TextView) view.findViewById(R.id.message);
+            mMessageView.setTextColor(Color.parseColor("#929292"));
         }
         setView(view);
         a.recycle();
