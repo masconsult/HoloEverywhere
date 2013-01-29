@@ -806,6 +806,9 @@ public class SlidingMenu extends RelativeLayout {
         mViewAbove.setCurrentItem(1, animate);
     }
     
+    /*
+     * New method.
+     */
     public void showAbove(boolean animate, int velocity) {
         mViewAbove.setCurrentItem(1, animate, velocity);
     }
@@ -826,6 +829,9 @@ public class SlidingMenu extends RelativeLayout {
         mViewAbove.setCurrentItem(0, animate);
     }
     
+    /*
+     * New method.
+     */
     public void showBehind(boolean animate, int velocity) {
         mViewAbove.setCurrentItem(0, animate, velocity);
     }

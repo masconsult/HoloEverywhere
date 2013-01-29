@@ -1051,6 +1051,9 @@ public class CustomViewAbove extends _ViewGroup {
         setCurrentItemInternal(item, true, false);
     }
     
+    /*
+     * New method
+     */
     public void setCurrentItem(int item,int velocity) {
         setCurrentItemInternal(item, true, false, velocity);
     }
@@ -1066,15 +1069,28 @@ public class CustomViewAbove extends _ViewGroup {
         setCurrentItemInternal(item, smoothScroll, false);
     }
     
+    /*
+     * New method.
+     */
     public void setCurrentItem(int item, boolean smoothScroll, int velocity) {
-        setCurrentItemInternal(item, smoothScroll, false, velocity);
+        setCurrentItemInternal(item, smoothScroll, false, velocity, false);
     }
 
+    /*
+     * New method.
+     */
     void setCurrentItemInternal(int item, boolean smoothScroll, boolean always) {
         setCurrentItemInternal(item, smoothScroll, always, 0);
     }
     
+    /*
+     * New method.
+     */
     void setCurrentItemInternal(int item, boolean smoothScroll, boolean always, int velocity) {
+    	setCurrentItemInternal(item, smoothScroll, always, velocity, true);
+    }
+    
+    void setCurrentItemInternal(int item, boolean smoothScroll, boolean always, int velocity, boolean limit) {
         if (!always && mCurItem == item && mMenu != null && mContent != null) {
             setScrollingCacheEnabled(false);
             return;
@@ -1094,7 +1110,7 @@ public class CustomViewAbove extends _ViewGroup {
             mInternalPageChangeListener.onPageSelected(item);
         }
         if (smoothScroll) {
-            smoothScrollTo(destX, 0, velocity);
+            smoothScrollTo(destX, 0, velocity, limit);
         } else {
             completeScroll();
             scrollTo(destX, 0);
@@ -1255,6 +1271,10 @@ public class CustomViewAbove extends _ViewGroup {
      *            otherwise)
      */
     void smoothScrollTo(int x, int y, int velocity) {
+    	smoothScrollTo(x, y, velocity, true);
+    }
+    
+    void smoothScrollTo(int x, int y, int velocity, boolean limit) {
         if (getChildCount() == 0) {
             // Nothing to do.
             setScrollingCacheEnabled(false);
@@ -1296,8 +1316,9 @@ public class CustomViewAbove extends _ViewGroup {
             duration = (int) ((pageDelta + 1) * 100);
             duration = MAX_SETTLE_DURATION;
         }
-        // Don't limit the velocity
-        //duration = Math.min(duration, MAX_SETTLE_DURATION);
+        if (limit){
+        duration = Math.min(duration, MAX_SETTLE_DURATION);
+        }
 
         mScroller.startScroll(sx, sy, dx, dy, duration);
         invalidate();
