@@ -805,6 +805,10 @@ public class SlidingMenu extends RelativeLayout {
     public void showAbove(boolean animate) {
         mViewAbove.setCurrentItem(1, animate);
     }
+    
+    public void showAbove(boolean animate, int velocity) {
+        mViewAbove.setCurrentItem(1, animate, velocity);
+    }
 
     /**
      * Opens the menu and shows the behind view.
@@ -821,7 +825,11 @@ public class SlidingMenu extends RelativeLayout {
     public void showBehind(boolean animate) {
         mViewAbove.setCurrentItem(0, animate);
     }
-
+    
+    public void showBehind(boolean animate, int velocity) {
+        mViewAbove.setCurrentItem(0, animate, velocity);
+    }
+    
     /**
      * Toggle the SlidingMenu. If it is open, it will be closed, and vice versa.
      */
