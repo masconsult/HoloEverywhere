@@ -662,6 +662,16 @@ public abstract class _HoloActivity extends Watson implements SuperStartActivity
         }
     }
 
+    private FragmentManager mFragmentManagerWrapper;
+
+    @Override
+    public FragmentManager getSupportFragmentManager() {
+        if (mFragmentManagerWrapper == null) {
+            mFragmentManagerWrapper = new _HoloFragmentManagerWrapper(mFragments);
+        }
+        return mFragmentManagerWrapper;
+    }
+
     public abstract ActionMode startActionMode(ActionMode.Callback callback);
 
     @SuppressLint("NewApi")
