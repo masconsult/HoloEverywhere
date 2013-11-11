@@ -1,0 +1,242 @@
+$base-color: #0099cc;
+$background-color: #151515;
+$panel-color: rgba(80, 80, 80, 0.3);
+$panel-width: 1000px;
+$panel-border-size: 2px;
+$foreground-color: #E6D3BD;
+$foreground-color-dark: #404346;
+$min-width: 240px;
+$header-font-size: 36px;
+$header-font-size-small: 28px;
+$header-padding: 8px;
+$menu-child-distance: 8px;
+$menu-child-distance-small: 2px;
+
+@import url(normalize.css);
+
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Roboto Regular'), local('Roboto-Regular'), url(fonts/roboto.woff) format('woff');
+}
+
+@mixin transition($style) {
+  -webkit-transition: $style;
+  -moz-transition: $style;
+  -o-transition: $style;
+  transition: $style;
+}
+
+@mixin border-line($where: none, $size: 2px) {
+  @if $where == top {
+    border-top: $size solid $base-color;
+  } @else if $where == bottom {
+    border-bottom: $size solid $base-color;
+  } @else if $where == left {
+    border-left: $size solid $base-color;
+  } @else if $where == right {
+    border-right: $size solid $base-color;
+  } @else {
+    border: 0;
+  }
+}
+
+html {
+  background: $background-color;
+  color: $foreground-color;
+  font-family: 'Roboto', Sans-Serif; 
+}
+
+body {
+  background: $panel-color;
+  width: $panel-width;
+  min-width: $min-width;
+  border: $panel-border-size groove rgba(140, 140, 140, 0.4);
+  margin: 32px auto;
+  padding: 0;
+}
+
+div.clearfix {
+  zoom:1;
+  clear: both;
+  display: block;
+}
+
+img {
+  max-width: 100%;
+}
+
+header.header {
+  color: $base-color;
+  font-size: $header-font-size;
+  @include border-line(bottom);
+  img.logo,div.text {
+    display: inline-block;
+    vertical-align: middle;
+  }
+  img.logo {
+    margin: $header-padding;
+  }
+  div.text {
+    display: inline-block;
+    margin: $header-padding;
+    padding: 0;
+    font-weight: bold;
+    .subtitle {
+      font-weight: normal;
+      font-size: .7em;
+    }
+  }
+  ul.menu {
+    display: block;
+    font-size: 0;
+    padding: 0;
+    margin: 0;
+    width: auto;
+    @include border-line(top);
+    li {
+      display: inline-block;
+      font-size: ($header-font-size * 0.7);
+      padding: 8px 12px;
+      @include transition(background 0.4s ease 0);
+      @include border-line(right, 1px);
+      @include border-line(left, 1px);
+      &:first-child { border-left: 0; }
+      &:last-child { border-right: 0; }
+      &:hover {
+        cursor: pointer;
+        background: ($base-color + #222222);
+      }
+      a {
+        color: $foreground-color;
+        text-decoration: none;
+      }
+      &.active {
+        @include border-line();
+        background: $base-color;
+        a {
+          color: $foreground-color-dark;
+        }
+        &:hover {
+          cursor: default !important;
+          background: ($base-color + #333333);
+        }
+      }
+    }
+    &:empty {
+      display: none;
+    }
+  }
+}
+
+footer.footer {
+  @include border-line(top);
+  padding: 4px;
+  text-align: right;
+  font-style:italic;
+  color: $base-color;
+}
+
+.node {
+  $node-padding: 2%;
+  float: left;
+  display: block;
+  width: (50% - $node-padding * 2);
+  padding: $node-padding;
+  header:first-child {
+    font-size: 1.3em;
+    @include border-line(bottom);
+    display: block;
+    color: $base-color;
+    padding: 4px;
+    font-weight: bold;
+  }
+}
+
+a.fork-me {
+  position: fixed;
+  top: 0;
+  right: 0;
+  border: 0;
+}
+
+@media all and (max-width: $panel-width) {
+  body {
+    margin: 0;
+    width: auto;
+    border: 0;
+  }
+  a.fork-me {
+    display: none;
+  }
+}
+
+@media all and (max-width: ($panel-width * 0.9)) {
+  header.header {
+    font-size: $header-font-size-small;
+    text-align: center;
+    padding: $header-padding 0 0 0;
+    ul.menu {
+      float: none;
+      display: block;
+      @include border-line(top);
+      li {
+        font-size: ($header-font-size-small * 0.7);
+        background: none;
+        color: $base-color;
+        padding-left: 10px;
+        padding-right: 10px;
+        @include transition((background 0.4s ease 0, color 0.4s ease 0));
+        &:hover {
+          color: white;
+        }
+        a {
+          color: inherit;
+        }
+      }
+    }
+  }
+  .node {
+    float: none;
+    display: block;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    border-bottom: 1px solid rgba(170, 170, 170, 0.2);
+    &:last-child {
+      margin-bottom: 0;
+      border-bottom: 0;
+    }
+    header:first-child {
+      padding: 12px;
+    }
+  }
+  div.clearfix {
+    clear: none;
+    visiblity: 0;
+    display: none;
+  }
+}
+
+@media all and (max-width: ($panel-width / 2)) {
+  header.header {
+    div.text {
+      margin-bottom: 4px;
+    }
+    ul.menu {
+      li {
+        display: block;
+        border: 0;
+        @include border-line(top, 1px);
+        @include border-line(bottom, 1px);
+        &:first-child { border-top: 0; }
+        &:last-child { border-bottom: 0; }
+      }
+    }
+  }
+}
+
+holoeverywhere,.gone {
+  display: none;
+}
